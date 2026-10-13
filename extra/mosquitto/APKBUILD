@@ -11,7 +11,7 @@ license="EPL-1.0 OR EPL-2.0"
 replaces="mosquitto-utils"
 install="$pkgname.pre-install"
 depends="$pkgname-libs=$pkgver-r$pkgrel libc++ cjson libssl3 libcrypto3 openssl c-ares libxslt qnx-io-sock libwebsockets"
-makedepends="openssl-dev>3 c-ares-dev libxslt libc++-dev qnx-io-sock-dev cjson-dev libwebsockets-dev cunit-dev"
+makedepends="openssl-dev>3 c-ares-dev libxslt libc++-dev qnx-io-sock-dev cjson-dev libwebsockets-dev cunit-dev compiler-rt"
 checkdepends="python3 cunit-dev libwebsockets-dev cjson-dev"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-libs++:_pp $pkgname-openrc
 	$pkgname-libs $pkgname-clients"
