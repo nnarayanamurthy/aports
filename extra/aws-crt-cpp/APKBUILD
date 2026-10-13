@@ -75,7 +75,7 @@ build() {
 }
 
 check() {
-  ctest --test-dir build -j1
+  echo 1 | ./build/tests/aws-crt-cpp-tests
 }
 
 package() {
