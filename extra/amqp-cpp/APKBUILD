@@ -8,7 +8,8 @@ arch="all"
 license="Apache-2.0"
 depends="libc++ qnx-io-sock"
 makedepends="cmake openssl-dev libc++-dev qnx-io-sock-dev"
-options="!check"
+subpackages="$pkgname-dev"
+
 source="
     $pkgname-$pkgver.tar.gz::https://github.com/CopernicaMarketingSoftware/AMQP-CPP/archive/refs/tags/v$pkgver.tar.gz
     add_qnx_support.patch
@@ -22,14 +23,9 @@ build() {
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
-    -DBUILD_SHARED_LIBS=ON \
     -DAMQP-CPP_LINUX_TCP=ON \
     -DAMQP-CPP_BUILD_SHARED=ON
   cmake --build build
-}
-
-check() {
-	ctest --test-dir build --output-on-failure
 }
 
 package() {
