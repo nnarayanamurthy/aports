@@ -5,7 +5,7 @@ description="MQTT v3.1.1 Message Broker"
 
 : ${cfgfile:="/etc/mosquitto/${RC_SVCNAME#mosquitto.}.conf"}
 
-command="/usr/sbin/mosquitto"
+command="/usr/bin/mosquitto"
 # mosquitto_args is here for backward compatibility only
 command_args="-c $cfgfile ${command_args:-$mosquitto_args}"
 command_background="yes"
