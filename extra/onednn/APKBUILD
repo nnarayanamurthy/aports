@@ -9,16 +9,16 @@ pkgdesc="oneAPI Deep Neural Network Library"
 url="https://github.com/uxlfoundation/oneDNN"
 arch="all !aarch64"
 license="Apache-2.0"
-depends=""
+depends="libc++ openmp"
 makedepends="cmake onetbb-dev"
 subpackages="$pkgname-dev $pkgname-doc"
-source="$pkgname-$pkgver.tar.gz::https://github.com/uxlfoundation/oneDNN/archive/refs/tags/v$pkgver.tar.gz,
+source="$pkgname-$pkgver.tar.gz::https://github.com/uxlfoundation/oneDNN/archive/refs/tags/v$pkgver.tar.gz
 001-qnx-fix-linking.patch
 "
 
 builddir="$srcdir/oneDNN-$pkgver"
-# a few tests hang forever and some are failing with Not enough RAM
-#options="!check"
+# Tests are disabled on QNX because some tests hang or exhaust available memory.
+options="!check"
 
 build() {
     rm -rf build
@@ -30,7 +30,7 @@ build() {
         -DCMAKE_C_FLAGS_RELEASE="-O1 -DNDEBUG -U_FORTIFY_SOURCE" \
         -DCMAKE_CXX_FLAGS_RELEASE="-O1 -DNDEBUG -U_FORTIFY_SOURCE" \
         -DONEDNN_ARCH_OPT_FLAGS="" \
-        -DDNNL_BUILD_TESTS=ON \
+        -DDNNL_BUILD_TESTS=OFF \
         -DDNNL_BUILD_EXAMPLES=OFF
 
     cmake --build build --parallel 1
@@ -39,8 +39,7 @@ build() {
 check() {
     OMP_NUM_THREADS=1 \
     CTEST_PARALLEL_LEVEL=1 \
-        ctest --test-dir build \
-        -j1
+        ctest --test-dir build -j1
 }
 
 package() {
